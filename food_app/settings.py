@@ -138,14 +138,11 @@ WSGI_APPLICATION = 'food_app.wsgi.application'
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.environ.get('DB_NAME', 'FoodDb'),
-        'USER': os.environ.get('DB_USER', 'postgres'),    
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'test1234'),    
-        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),       
-        'PORT': os.environ.get('DB_PORT', '5432'),            
-    }
+    'default': dj_database_url.parse(
+        os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
 # Password validation
