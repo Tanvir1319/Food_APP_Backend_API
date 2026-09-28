@@ -22,4 +22,5 @@ social-auth-app-django==5.9.0
 social-auth-core==4.9.1
 sqlparse==0.6.0
 tzdata==2026.4
+dj-database-url==2.3.0
 urllib3==2.7.0
