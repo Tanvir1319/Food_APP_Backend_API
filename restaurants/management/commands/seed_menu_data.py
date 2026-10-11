@@ -272,30 +272,28 @@ class Command(BaseCommand):
                 }
             )
 
-            Address.objects.get_or_create(
-                user=cust1,
-                title='Home',
-                defaults={
-                    'street_address': 'Flat 4B, Road 12, Banani',
-                    'city': 'Dhaka',
-                    'area': 'Banani',
-                    'latitude': 23.7937,
-                    'longitude': 90.4066,
-                    'is_default': True
-                }
-            )
-            Address.objects.get_or_create(
-                user=cust1,
-                title='Office',
-                defaults={
-                    'street_address': 'Level 8, Concord Tower, Gulshan 1',
-                    'city': 'Dhaka',
-                    'area': 'Gulshan',
-                    'latitude': 23.7781,
-                    'longitude': 90.4172,
-                    'is_default': False
-                }
-            )
+            if not Address.objects.filter(user=cust1, title='Home').exists():
+                Address.objects.create(
+                    user=cust1,
+                    title='Home',
+                    street_address='Flat 4B, Road 12, Banani',
+                    city='Dhaka',
+                    area='Banani',
+                    latitude=23.7937,
+                    longitude=90.4066,
+                    is_default=True
+                )
+            if not Address.objects.filter(user=cust1, title='Office').exists():
+                Address.objects.create(
+                    user=cust1,
+                    title='Office',
+                    street_address='Level 8, Concord Tower, Gulshan 1',
+                    city='Dhaka',
+                    area='Gulshan',
+                    latitude=23.7781,
+                    longitude=90.4172,
+                    is_default=False
+                )
 
             cust2, _ = User.objects.get_or_create(
                 email='customer.sarah@example.com',
@@ -319,18 +317,17 @@ class Command(BaseCommand):
                 }
             )
 
-            Address.objects.get_or_create(
-                user=cust2,
-                title='Apartment',
-                defaults={
-                    'street_address': 'House 45, Sector 4, Uttara',
-                    'city': 'Dhaka',
-                    'area': 'Uttara',
-                    'latitude': 23.8683,
-                    'longitude': 90.3986,
-                    'is_default': True
-                }
-            )
+            if not Address.objects.filter(user=cust2, title='Apartment').exists():
+                Address.objects.create(
+                    user=cust2,
+                    title='Apartment',
+                    street_address='House 45, Sector 4, Uttara',
+                    city='Dhaka',
+                    area='Uttara',
+                    latitude=23.8683,
+                    longitude=90.3986,
+                    is_default=True
+                )
 
             # Ensure test_customer also has a CustomerProfile
             CustomerProfile.objects.get_or_create(

@@ -16,9 +16,26 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.http import JsonResponse
+from django.core.management import call_command
+
+def seed_database_view(request):
+    try:
+        call_command('migrate', interactive=False)
+        call_command('seed_menu_data')
+        return JsonResponse({
+            "status": "success",
+            "message": "Database successfully migrated and seeded with fake data for all APIs!"
+        }, status=200)
+    except Exception as e:
+        return JsonResponse({
+            "status": "error",
+            "message": str(e)
+        }, status=500)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/seed-database/', seed_database_view, name='seed-database'),
     path('api/', include('api.urls')),
     path('api/', include('api_consumer.urls')),
 ]
